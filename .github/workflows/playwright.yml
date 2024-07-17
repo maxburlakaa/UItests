@@ -1,47 +1,29 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Install Testmo CLI
-      run: npm install --no-save @testmo/testmo-cli
-    - run: |
-          if [[ -z "${TESTMO_URL}" ]]; then
-            echo "The TESTMO_URL secret is not defined for this repository"
-            exit 1
-          fi
-
-          if [[ -z "${TESTMO_TOKEN}" ]]; then
-            echo "The TESTMO_TOKEN secret is not defined for this repository"
-            exit 1
-          fi
-      env:
-          TESTMO_URL: ${{ secrets.TESTMO_URL }}
-          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
-    - run: |
-          npx testmo automation:run:submit \
-            --instance "$TESTMO_URL" \
-            --project-id 1 \
-            --name "UI test run" \
-            --source "unui-tests" \
-            --results results/*.xml \
-            -- npx playwright test
-      env:
-          TESTMO_URL: ${{ secrets.TESTMO_URL }}
-          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
-
-
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        run: npx playwright test
+      - name: Upload results to Testmo
+        env:
+          TESTMO_API_KEY: ${{ secrets.TESTMO_API_KEY }}
+          TESTMO_PROJECT_ID: ${{ secrets.TESTMO_PROJECT_ID }}
+          TESTMO_BASE_URL: ${{ secrets.TESTMO_BASE_URL }}
+        run: |
+          npm install -g @testmo/testmo-cli
+          testmo upload --config testmo.config.js
