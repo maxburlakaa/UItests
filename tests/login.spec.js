@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { log } from 'console';
 
-test('Successfull login', async ({ page }) => {
+test('Log In Login with the valid credentials', async ({ page }) => {
   await page.goto('https://relbuild.nanitor.net/');
   await page.getByRole('textbox').fill('max+84732754828@nanitor.com');
   await page.getByRole('button', { name: 'Sign in' }).click();
@@ -11,7 +11,7 @@ test('Successfull login', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Global dashboard' })).toContainText('Global dashboard');
 });
 
-test('Wrong Password login', async ({ page }) => {
+test('Login with incorrect password', async ({ page }) => {
   await page.goto('https://relbuild.nanitor.net/');
   await page.getByRole('textbox').fill('max+84732754828@nanitor.com');
   await page.getByRole('button', { name: 'Sign in' }).click();
@@ -22,7 +22,7 @@ test('Wrong Password login', async ({ page }) => {
 });
 
 
-test('Wrong Email login', async ({ page }) => {
+test('Login with incorrect email', async ({ page }) => {
   await page.goto('https://relbuild.nanitor.net/');
   await page.getByRole('textbox').click();
   await page.getByRole('textbox').fill('max+8473@nanitor.com');
@@ -30,9 +30,9 @@ test('Wrong Email login', async ({ page }) => {
   await expect(page.getByRole('paragraph')).toContainText('Looks like that e-mail address isn\'t connected to any account. Double-check your entry or contact your administrator.');
 });
 
-test('Logout', async ({page}) => {
+test('Logging out', async ({page}) => {
   await page.goto('https://relbuild.nanitor.net/');
-  await page.getByRole('textbox').fill('max+84732754828@nanitor.com');
+  await page.getByRole('textbox').fill('max+84732754828@nanitor.com');ß
   await page.getByRole('button', { name: 'Sign in' }).click();
   await expect.soft(page.locator('form')).toContainText('Password');
   await page.getByRole('textbox').fill('Password123!');
