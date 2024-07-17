@@ -37,7 +37,6 @@ jobs:
             --name "UI test run" \
             --source "unui-tests" \
             --results results/*.xml \
-            -- npx playwright install --with-deps
             -- npx playwright test
       env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
