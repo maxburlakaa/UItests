@@ -23,8 +23,8 @@ module.exports = defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-    ['list'],
-    ['junit', { outputFile: 'results.xml' }]
+    ['junit', { outputFile: 'results.xml',
+      embedAnnotationsAsProperties: true, }]
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -34,6 +34,7 @@ module.exports = defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
+  
 
   /* Configure projects for major browsers */
   projects: [
@@ -80,6 +81,7 @@ module.exports = defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
+
 
 
 
