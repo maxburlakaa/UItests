@@ -40,14 +40,12 @@ jobs:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
     - run: |
-            export TESTMO_TOKEN= token
-            testmo automation:run:submit \
-            --instance https://nanitor.testmo.net \
+          testmo automation:run:submit \
+            --instance "$TESTMO_URL" \
             --project-id 1 \
-            --name "Playwright test run" \
-            --source "ui-tests" \
+            --name "UI test run" \
+            --source "unui-tests" \
             --results results/*.xml \
-            -- npx playwright test
       env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
