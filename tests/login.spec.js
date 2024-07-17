@@ -3,7 +3,7 @@ import { log } from 'console';
 
 test('Log In Login with the valid credentials', async ({ page }) => {
   await page.goto('https://relbuild.nanitor.net/');
-  await page.getByRole('textbox').fill('max+84732754828@nanitor.com');
+  await page.getByRole('textbox').fill('max+53276572386587236@nanitor.com');
   await page.getByRole('button', { name: 'Sign in' }).click();
   await expect.soft(page.locator('form')).toContainText('Password');
   await page.getByRole('textbox').fill('Password123!');
@@ -13,7 +13,7 @@ test('Log In Login with the valid credentials', async ({ page }) => {
 
 test('Login with incorrect password', async ({ page }) => {
   await page.goto('https://relbuild.nanitor.net/');
-  await page.getByRole('textbox').fill('max+84732754828@nanitor.com');
+  await page.getByRole('textbox').fill('max+53276572386587236@nanitor.com');
   await page.getByRole('button', { name: 'Sign in' }).click();
   await expect.soft(page.locator('form')).toContainText('Password');
   await page.getByRole('textbox').fill('Pasword123!');
@@ -32,7 +32,7 @@ test('Login with incorrect email', async ({ page }) => {
 
 test('Logging out', async ({page}) => {
   await page.goto('https://relbuild.nanitor.net/');
-  await page.getByRole('textbox').fill('max+84732754828@nanitor.com');ß
+  await page.getByRole('textbox').fill('max+53276572386587236@nanitor.com');ß
   await page.getByRole('button', { name: 'Sign in' }).click();
   await expect.soft(page.locator('form')).toContainText('Password');
   await page.getByRole('textbox').fill('Password123!');
