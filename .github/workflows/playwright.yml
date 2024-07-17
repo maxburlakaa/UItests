@@ -43,3 +43,4 @@ jobs:
         env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
+      - run: testmo import-junit --project-id ${{ secrets.TESTMO_PROJECT_ID }} --file results.xml --api-key ${{ secrets.TESTMO_API_KEY }} --url ${{ secrets.TESTMO_BASE_URL }}
