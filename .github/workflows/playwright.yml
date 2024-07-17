@@ -25,3 +25,29 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+    - run: npm install --no-save @testmo/testmo-cli
+    - run: |
+          if [[ -z "${TESTMO_URL}" ]]; then
+            echo "The TESTMO_URL secret is not defined for this repository"
+            exit 1
+          fi
+
+          if [[ -z "${TESTMO_TOKEN}" ]]; then
+            echo "The TESTMO_TOKEN secret is not defined for this repository"
+            exit 1
+          fi
+      env:
+          TESTMO_URL: ${{ secrets.TESTMO_URL }}
+          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
+    - run: |
+            export TESTMO_TOKEN= token
+            testmo automation:run:submit \
+            --instance https://nanitor.testmo.net \
+            --project-id 1 \
+            --name "Playwright test run" \
+            --source "ui-tests" \
+            --results results/*.xml \
+            -- npx playwright test
+      env:
+          TESTMO_URL: ${{ secrets.TESTMO_URL }}
+          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
